@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
@@ -5,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     height: 100vh;
     overflow: hidden;
 }
@@ -14,6 +16,8 @@ header {
     padding: 10px 0;
     text-align: center;
     width: 100%;
+    height: auto;
+    
 }
 
 header h1 {
@@ -21,55 +25,160 @@ header h1 {
     color: #4a90e2;
 }
 
-.sidebar {
+.slide {
+    height: 100%;
     width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden by default */
     background-color: #1e1e2e;
-    padding: 20px;
+    z-index: 1000;
+    transition: left 0.5s ease; /* Transition the left property */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
-    position: fixed;
-    left: -250px;
-    top: 0;
-    height: 100%;
-    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
-.sidebar.active {
-    left: 0;
+input:checked ~ .slide {
+    left: 0; /* Slide in when checkbox is checked */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-.toggle-btn {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    background-color: #4a90e2;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    color: #ffffff;
-    font-size: 18px;
-}
-
-.sidebar h3 {
+h1 {
     color: #4a90e2;
-    margin-top: 0;
+    font-weight: 800;
+    text-align: center;
+    padding: 10px 0;
+    pointer-events: none;
+    margin-top: 20px;
 }
 
-.sidebar select, .sidebar button {
-    width: 100%;
+ul li {
+    list-style: none;
+}
+
+ul li a {
+    color: #011a41;
+    font-weight: 500;
+    padding: 10px 0;
+    display: block;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: 0.2s ease-out;
+    padding-left: 15px;
+}
+
+ul li:hover a {
+    color: #fff;
+    background-color: #4a90e2;
+}
+
+.slide select {
+    width: calc(100% - 30px);
     padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px 15px;
     background-color: #282838;
     color: #ffffff;
+    font-size: 14px;
 }
 
-.sidebar button {
+.slide label {
+    display: block;
+    color: #4a90e2;
+    padding: 0 15px;
+    font-weight: 600;
+}
+
+/* Hamburger Toggle Button */
+.toggle {
+    position: fixed;
+    height: 40px;
+    width: 40px;
+    top: 20px;
+    left: 0; /* Positioned at the left edge of the screen */
+    z-index: 1001;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Initially hidden */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.toggle .common {
+    position: absolute;
+    height: 2px;
+    width: 25px;
     background-color: #4a90e2;
+    border-radius: 50px;
+    transition: 0.3s ease;
+}
+
+.toggle .top_line {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.toggle .middle_line {
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.toggle .bottom_line {
+    top: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Sidebar toggle button */
+input:checked ~ .toggle .top_line {
+    transform: translate(-50%, -50%) rotate(45deg);
+    top: 50%;
+    left: 50%;
+}
+
+input:checked ~ .toggle .bottom_line {
+    transform: translate(-50%, -50%) rotate(-45deg);
+    top: 50%;
+    left: 50%;
+}
+
+input:checked ~ .toggle .middle_line {
+    opacity: 0;
+}
+/* Hover area near the left side of the screen */
+.hover-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px; /* Set width for the hover-sensitive area */
+    height: 100%;
+    z-index: 1002; /* Ensure it appears on top */
     cursor: pointer;
 }
 
+/* Show the toggle button when hovering near the left edge */
+.hover-area:hover + .toggle {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure the button stays visible when hovered over */
+.toggle:hover {
+    opacity: 1;
+    visibility: visible;
+}
+/* Content Styles */
 .content {
     flex-grow: 1;
     display: flex;
@@ -87,6 +196,8 @@ header h1 {
 .map-container {
     flex-grow: 1;
     margin-top: 20px;
+    height: 500px;
+    width: 900px;
 }
 
 .blog-post {
@@ -94,18 +205,37 @@ header h1 {
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
+    max-width: 800px;
 }
 
 .blog-post h2 {
     color: #4a90e2;
 }
+.slide button {
+    margin: 20px; /* Add some margin around the button */
+    padding: 10px 20px; /* Add padding inside the button */
+    background-color: #388ff3; /* Button background color */
+    color: #2e2424; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+/* Button hover effect */
+.slide button:hover {
+    background-color: #84b7ee; /* Darker color on hover */
+}
 
+/* Footer Styles */
 footer {
     background-color: #1e1e2e;
     color: #888;
     text-align: center;
     padding: 10px 0;
     width: 100%;
+    position: relative;
+    height: auto;
 }
 
 footer a {
@@ -113,8 +243,10 @@ footer a {
     text-decoration: none;
 }
 
-/* Set height for the map container */
+/* Map Container */
 #map {
     height: 400px;
     width: 100%;
 }
+
+

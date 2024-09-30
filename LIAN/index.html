@@ -7,35 +7,55 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css" />
-    <style>
-       
-    </style>
 </head>
 <body>
     <header>
         <h1>Pathfinding Algorithms Blog</h1>
     </header>
+    <label>
+        <!-- Hidden checkbox for toggling the sidebar -->
+        <input type="checkbox" id="sidebarToggle" style="display: none;">
 
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <!-- Hover area to show the toggle button -->
+        <div class="hover-area"></div>
 
-    <div class="sidebar" id="sidebar">
-        <h3>Select City</h3>
-        <select id="citySelect" onchange="updateMap()">
-            <option value="Mumbai">Mumbai</option>
-            <option value="Beed">Beed</option>
-            <option value="Pune">Pune</option>
-            <option value="Delhi">Delhi</option>
-        </select>
+        <!-- Toggle button (hamburger menu) -->
+        <div class="toggle" for="sidebarToggle">
+            <span class="top_line common"></span>
+            <span class="middle_line common"></span>
+            <span class="bottom_line common"></span>
+        </div>
 
-        <h3>Select Algorithm</h3>
-        <select id="algorithmSelect">
-            <option value="dijkstra">Dijkstra's Algorithm</option>
-            <option value="a_star">A* Algorithm</option>
-            <option value="greedy">Greedy Best-First Search</option>
-        </select>
-
-        <button onclick="visualize()">Visualize</button>
-    </div>
+        <!-- Sidebar content -->
+        <div class="slide" id="sidebar">
+            <h3>Select city and Algorithm</h3>
+            <ul>
+                <li>
+                    <label for="cities">Select City:</label>
+                    <select id="cities" onchange="updateMap()">
+                        <option value="" disabled selected>Select a city</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Beed">Beed</option>
+                        <option value="Malegaon">Malegaon</option>
+                        <option value="Ratnagri">Ratnagri</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="algorithms">Select Algorithm:</label>
+                    <select id="algorithms">
+                        <option value="" disabled selected>Select an algorithm</option>
+                        <option value="dijkstra">Dijkstra's Algorithm</option>
+                        <option value="a-star">A* Algorithm</option>
+                        <option value="greedy">Greedy Algorithm</option>
+                        <option value="bidirectional">Bi-directional Search</option>
+                    </select>
+                </li>
+            </ul>
+            <button>Visualize</button>
+            <button onclick="resetMap()">Reset</button>
+        </div>
+    </label>
 
     <div class="content" id="content">
         <div class="blog-post">
@@ -54,44 +74,6 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script>
-        // Initialize the map
-        const map = L.map('map').setView([19.0760, 72.8777], 12); // Coordinates for Mumbai
-
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
-
-        function updateMap() {
-            const city = document.getElementById('citySelect').value;
-            let coordinates = [19.0760, 72.8777]; // Default to Mumbai
-
-            if (city === 'Beed') {
-                coordinates = [18.9913, 75.7600];
-            } else if (city === 'Pune') {
-                coordinates = [18.5204, 73.8567];
-            } else if (city === 'Delhi') {
-                coordinates = [28.7041, 77.1025];
-            }
-
-            map.setView(coordinates, 12);
-        }
-
-        function visualize() {
-            const city = document.getElementById('citySelect').value;
-            const algorithm = document.getElementById('algorithmSelect').value;
-            alert(`Visualizing ${algorithm} on ${city}`);
-            // Add your visualization logic here
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const content = document.getElementById('content');
-            sidebar.classList.toggle('active');
-            content.classList.toggle('shrink');
-        }
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
